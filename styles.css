@@ -33,3 +33,22 @@ h3 a {
   text-decoration: none;
   font-style: italic;
 }
+.header {
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  z-index: 10;
+  margin-right: 30px;
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom-left-radius: 15px;
+  padding-left:10px;
+  padding-bottom: 7px;
+  background-color: white;
+}
+.header a {
+  margin-top: 0px;
+  font-size: 1.6em;
+  font-weight: bold;
+  text-decoration: none;
+}
