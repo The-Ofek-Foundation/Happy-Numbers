@@ -29,3 +29,7 @@ input {
   top: 0px;
   left: 0px;
 }
+h3 a {
+  text-decoration: none;
+  font-style: italic;
+}
