@@ -56,7 +56,7 @@ function perfectify(num) {
 function falldownNumber(previousNumbers, symbol) {
 	var falldown = $('<div class="falling-number"></div>').text(String(previousNumbers).replace(/,/g, symbol));
 	$('body').append(falldown);
-	var top = getElemHeight(document.getElementById('content-wrapper'));
+	var top = getElemHeight(contentWrapper);
 	$('.falling-number').each(function() {
 		top -= $(this).outerHeight();
 	});
