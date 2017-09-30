@@ -3,8 +3,12 @@ var mode = 'add';
 var nthPower = false;
 var inverse = false;
 
+var calcDivElem = getElemId('calculations-div');
+
 function clear() {
-	$('.falling-number').remove();
+	var fs = getElemsClass('falling-number');
+	for (var i = 0; i < fs.length; i++)
+		fs[i].remove();
 }
 
 function fact(num) {
@@ -54,13 +58,14 @@ function perfectify(num) {
 }
 
 function falldownNumber(previousNumbers, symbol) {
-	var falldown = $('<div class="falling-number"></div>').text(String(previousNumbers).replace(/,/g, symbol));
-	$('body').append(falldown);
+	var falldown = createElem("div");
+	addClassElem(falldown, 'falling-number');
+	setElemText(falldown, String(previousNumbers).replace(/,/g, symbol));
+	getElemTagName('body').appendChild(falldown);
 	var top = getElemHeight(contentWrapper);
-	$('.falling-number').each(function() {
-		top -= $(this).outerHeight();
-	});
-	falldown.animate({top: top}, 10000, 'linear');
+	for (item of getElemsClass('falling-number'))
+		top -= getElemHeight(item);
+	setElemStyle(falldown, 'top', top + 'px');
 }
 
 function runPerfect(num, previousNumbers, output) {
@@ -76,10 +81,10 @@ function runPerfect(num, previousNumbers, output) {
 	previousNumbers.push(num.toFixed(0));
 	if (output) {
 		if (elapsedTime > 1000)
-			$('#calculations-div').text('Inconclusive');
+			setElemText(calcDivElem, 'Inconclusive')
 		else if (num.eq(Big('1')))
-			$('#calculations-div').text('Happy!');
-		else $('#calculations-div').text('Unhappy');
+			setElemText(calcDivElem, 'Happy!')
+		else setElemText(calcDivElem, 'Unhappy');
 		falldownNumber(previousNumbers, ' > ');
 		console.log(String(previousNumbers).replace(/,/g,' > '));
 	}
@@ -89,33 +94,25 @@ function runPerfect(num, previousNumbers, output) {
 }
 
 function checkAndRunInput() {
-	if ($('#input-number').val().length === 0 || isNaN($('#input-number').val()))
+	if (getInputValue('input-number').length === 0 || isNaN(getInputValue('input-number')))
 		alert("Please Enter a Number");
-	else if ($('#input-number').val() < 0)
+	else if (getInputValue('input-number') < 0)
 		alert("Make sure your Number is Positive");
-	else runPerfect(Big($('#input-number').val()), [], true);
+	else runPerfect(Big(getInputValue('input-number')), [], true);
 }
 
-$('#calculate-btn').click(function() {
-	checkAndRunInput();
-});
-
-$("#input-number").keydown(function(e) {
-	$('#calculations-div').text('???');
+getElemName('input-number').addEventListener('keydown', function(e) {
+	setElemText(calcDivElem, '???');
 	if (e.keyCode == 13)				// enter key
 		checkAndRunInput();
 });
 
 function evaluate() {
-	eval($('#developer-input').val());
-	$('#developer-input').val('');
+	eval(getInputValue('developer-input'));
+	setInputValue('developer-input', '')
 }
 
-$('#eval-btn').click(function() {
-	evaluate();
-});
-
-$('#developer-input').keydown(function(e) {
+getElemName('developer-input').addEventListener('keydown', function(e) {
 	if (e.keyCode == 13)
 		evaluate();
 });
